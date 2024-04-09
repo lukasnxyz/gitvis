@@ -6,7 +6,7 @@ import (
 	"os"
 
 	//"visgit/src/fetdata"
-	"visgit/src/draw"
+	"github.com/lukasnxyz/visgit/draw"
 )
 
 func main() {
