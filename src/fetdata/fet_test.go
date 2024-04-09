@@ -1,0 +1,5 @@
+package fetdata
+
+import (
+	"testing"
+)

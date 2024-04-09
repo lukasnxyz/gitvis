@@ -2,8 +2,13 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+
+	//"visgit/src/fetdata"
+	"visgit/src/draw"
 )
 
 func main() {
-	fmt.Println("Hello, world!")
+	draw.PrintMsg(os.Stdout, "ready to go")
 }
