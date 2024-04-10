@@ -1,8 +1,8 @@
 package draw
 
 import (
-	"testing"
 	"bytes"
+	"testing"
 )
 
 func TestPrintMsg(t *testing.T) {

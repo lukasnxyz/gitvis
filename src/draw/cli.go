@@ -6,5 +6,5 @@ import (
 )
 
 func PrintMsg(w io.Writer, msg string) {
-	fmt.Fprintf(w, msg + "\n")
+	fmt.Fprintf(w, msg)
 }
