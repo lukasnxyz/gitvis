@@ -19,8 +19,7 @@ type commit struct {
 	Time         time.Time
 	Message      string
 	Author       string
-	AuthorEmail  string
-	CommitId     plumbing.Hash
+	Id           plumbing.Hash
 	LinesAdded   int
 	LinesDeleted int
 }
@@ -31,16 +30,17 @@ type Repository struct {
 	Status       string
 	Commits      []commit
 	NumOfCommits int
+	Lines        int
 }
 
 func (r Repository) String() string {
-	return fmt.Sprintf("Repo [\n\tName: %s\n\tPath: %s\n\tStatus: %s\n\tNumber of commits: %d\n]",
-		r.Name, r.Path, r.Status, r.NumOfCommits)
+	return fmt.Sprintf("Repo [\n\tName: %s\n\tPath: %s\n\tStatus: %s\n\tNumber of commits: %d\n\tLines of code: %d\n]",
+		r.Name, r.Path, r.Status, r.NumOfCommits, r.Lines)
 }
 
 func (c commit) String() string {
-	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\n\tAuthor: %s\n\tEmail: %s\n\tCommitId: %s\n\tDiff: -%d	+%d\n]",
-		c.Time.String(), c.Message, c.Author, c.AuthorEmail, c.CommitId, c.LinesDeleted, c.LinesAdded)
+	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tId: %s\n\tDiff: -%d	+%d\n]",
+		c.Time.String(), c.Message, c.Author, c.Id, c.LinesDeleted, c.LinesAdded)
 }
 
 func Fet(path string) Repository {
@@ -54,7 +54,9 @@ func NewRepository(path string) (repo Repository) {
 	repo.Name = ""
 	repo.Path = path
 	repo.Status = ""
+	//repo.Commits
 	repo.NumOfCommits = 0
+	repo.Lines = 0
 
 	return
 }
@@ -75,20 +77,17 @@ func (r *Repository) fillCommits() {
 		panic(err)
 	}
 
-	// iter is an interface
-
-	iter.ForEach(func(o *object.Commit) error {
+	iter.ForEach(func(c *object.Commit) error {
 		nCommit := commit{
-			Time:        time.Now(),
-			Message:     "",
-			Author:      "",
-			AuthorEmail: "",
-			CommitId:    o.ID(),
-			LinesAdded: 0,
+			Time:         c.Author.When,
+			Message:      c.Message,
+			Author:       c.Author.String(),
+			Id:           c.ID(),
+			LinesAdded:   0,
 			LinesDeleted: 0,
 		}
 
-		stats, err := o.Stats()
+		stats, err := c.Stats()
 		if err != nil {
 			panic(err)
 		}
@@ -98,10 +97,9 @@ func (r *Repository) fillCommits() {
 			nCommit.LinesDeleted += stats[i].Deletion
 		}
 
-		//fmt.Println(o.String())
-
 		r.NumOfCommits++ // this doesn't work
 		r.Commits = append(r.Commits, nCommit)
+		r.Lines += nCommit.LinesAdded - nCommit.LinesDeleted
 
 		return nil
 	})
