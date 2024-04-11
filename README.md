@@ -4,11 +4,6 @@ Inspired by [lesshero](https://github.com/kaihendry/lesshero/).
 
 #### Quickstart
 ```shell
-go get or install command
-gitvis -h
+go install github.com/lukasnxyz/gitvis@latest
+gitvis .
 ```
-
-##### Todo
-- Show tests pass on GitHub page
-- Gif of working
-- Run gofmt and go test on repo each push
