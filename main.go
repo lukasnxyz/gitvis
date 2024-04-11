@@ -22,4 +22,6 @@ func main() {
 	for i := 0; i < repo.NumOfCommits; i++ {
 		fmt.Println(repo.Commits[i])
 	}
+
+	//display.Vis(repo)
 }

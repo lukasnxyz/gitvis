@@ -10,19 +10,13 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
+// Tests!
+// Use this: https://github.com/guptarohit/asciigraph
+
 const (
 	daysLastSixMonths = 183
 	outOfRange        = 99999
 )
-
-type commit struct {
-	Time         time.Time
-	Message      string
-	Author       string
-	Id           plumbing.Hash
-	LinesAdded   int
-	LinesDeleted int
-}
 
 type Repository struct {
 	Name         string
@@ -33,14 +27,24 @@ type Repository struct {
 	Lines        int
 }
 
+type commit struct {
+	Time         time.Time
+	Message      string
+	Author       string
+	Id           plumbing.Hash
+	LinesAdded   int
+	LinesDeleted int
+	Lines int
+}
+
 func (r Repository) String() string {
 	return fmt.Sprintf("Repo [\n\tName: %s\n\tPath: %s\n\tStatus: %s\n\tNumber of commits: %d\n\tLines of code: %d\n]",
 		r.Name, r.Path, r.Status, r.NumOfCommits, r.Lines)
 }
 
 func (c commit) String() string {
-	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tId: %s\n\tDiff: -%d	+%d\n]",
-		c.Time.String(), c.Message, c.Author, c.Id, c.LinesDeleted, c.LinesAdded)
+	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tId: %s\n\tDiff: -%d	+%d\n\tLines: %d\n]",
+		c.Time.String(), c.Message, c.Author, c.Id, c.LinesDeleted, c.LinesAdded, c.Lines)
 }
 
 func Fet(path string) Repository {
@@ -97,9 +101,10 @@ func (r *Repository) fillCommits() {
 			nCommit.LinesDeleted += stats[i].Deletion
 		}
 
-		r.NumOfCommits++ // this doesn't work
-		r.Commits = append(r.Commits, nCommit)
+		r.NumOfCommits++
 		r.Lines += nCommit.LinesAdded - nCommit.LinesDeleted
+
+		r.Commits = append(r.Commits, nCommit)
 
 		return nil
 	})
