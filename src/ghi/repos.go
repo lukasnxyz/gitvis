@@ -1,4 +1,4 @@
-package fetdata
+package ghi
 
 import (
 	"context"
@@ -11,8 +11,8 @@ import (
 
 type UserRepo struct {
 	Name        string
-	HTMLURL         string
-	CloneURL string
+	HTMLURL     string
+	CloneURL    string
 	Description string
 }
 
@@ -37,9 +37,9 @@ func FetchUserRepos(client *github.Client, user string) []*github.Repository {
 func ConvUserRepos(repos []*github.Repository) (userRepos []UserRepo) {
 	for i := 0; i < len(repos); i++ {
 		userRepos = append(userRepos, UserRepo{
-			Name: repos[i].GetName(),
-			HTMLURL: repos[i].GetHTMLURL(),
-			CloneURL: repos[i].GetCloneURL(),
+			Name:        repos[i].GetName(),
+			HTMLURL:     repos[i].GetHTMLURL(),
+			CloneURL:    repos[i].GetCloneURL(),
 			Description: repos[i].GetDescription(),
 		})
 	}

@@ -1,4 +1,4 @@
-package fetdata
+package ghi
 
 import (
 	"testing"

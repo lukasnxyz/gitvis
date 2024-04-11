@@ -10,3 +10,4 @@ gitvis -h
 ##### Todo
 - Show tests pass on GitHub page
 - Gif of working
+- Run gofmt and go test on repo each push
