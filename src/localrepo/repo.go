@@ -16,7 +16,7 @@ const (
 )
 
 type commit struct {
-	Time    time.Time
+	Time         time.Time
 	Message      string
 	Author       string
 	Id           plumbing.Hash
