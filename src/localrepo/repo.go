@@ -31,10 +31,11 @@ type commit struct {
 	Time         time.Time
 	Message      string
 	Author       string
+	Email        string
 	Id           plumbing.Hash
 	LinesAdded   int
 	LinesDeleted int
-	Lines int
+	Lines        int
 }
 
 func (r Repository) String() string {
@@ -43,8 +44,8 @@ func (r Repository) String() string {
 }
 
 func (c commit) String() string {
-	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tId: %s\n\tDiff: -%d	+%d\n\tLines: %d\n]",
-		c.Time.String(), c.Message, c.Author, c.Id, c.LinesDeleted, c.LinesAdded, c.Lines)
+	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tEmail: %s\n\tId: %s\n\tDiff: -%d	+%d\n\tLines: %d\n]",
+		c.Time, c.Message, c.Author, c.Email, c.Id, c.LinesDeleted, c.LinesAdded, c.Lines)
 }
 
 func Fet(path string) Repository {
@@ -85,7 +86,8 @@ func (r *Repository) fillCommits() {
 		nCommit := commit{
 			Time:         c.Author.When,
 			Message:      c.Message,
-			Author:       c.Author.String(),
+			Author:       c.Author.Name,
+			Email:        c.Author.Email,
 			Id:           c.ID(),
 			LinesAdded:   0,
 			LinesDeleted: 0,
