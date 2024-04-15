@@ -1,5 +1,0 @@
-package chart
-
-import (
-	"testing"
-)

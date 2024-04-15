@@ -1,17 +1,15 @@
 package localrepo
 
+// Back-end
+
 import (
 	"fmt"
-	//"path/filepath"
 	"time"
 
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
-
-// Tests!
-// Use this: https://github.com/guptarohit/asciigraph
 
 const (
 	daysLastSixMonths = 183
@@ -22,12 +20,12 @@ type Repository struct {
 	Name         string
 	Path         string
 	Status       string
-	Commits      []commit
+	Commits      []Commit
 	NumOfCommits int
 	Lines        int
 }
 
-type commit struct {
+type Commit struct {
 	Time         time.Time
 	Message      string
 	Author       string
@@ -43,7 +41,7 @@ func (r Repository) String() string {
 		r.Name, r.Path, r.Status, r.NumOfCommits, r.Lines)
 }
 
-func (c commit) String() string {
+func (c Commit) String() string {
 	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tEmail: %s\n\tId: %s\n\tDiff: -%d	+%d\n\tLines: %d\n]",
 		c.Time, c.Message, c.Author, c.Email, c.Id, c.LinesDeleted, c.LinesAdded, c.Lines)
 }
@@ -59,7 +57,6 @@ func NewRepository(path string) (repo Repository) {
 	repo.Name = ""
 	repo.Path = path
 	repo.Status = ""
-	//repo.Commits
 	repo.NumOfCommits = 0
 	repo.Lines = 0
 
@@ -83,7 +80,7 @@ func (r *Repository) fillCommits() {
 	}
 
 	iter.ForEach(func(c *object.Commit) error {
-		nCommit := commit{
+		nCommit := Commit{
 			Time:         c.Author.When,
 			Message:      c.Message,
 			Author:       c.Author.Name,

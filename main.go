@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/lukasnxyz/gitvis/src/display"
 	"github.com/lukasnxyz/gitvis/src/localrepo"
 )
 
-// Notes
-// - cli input
-// - don't use panic for errors
+/*
+	Notes
+	- (local) Show commit history like on GitHub by week rows
+	- (local) Be able to inspect a commit
+*/
 
 func main() {
 	currPath, err := os.Getwd()
@@ -28,14 +31,17 @@ func main() {
 
 	if *localRepoFlag {
 		repo := localrepo.Fet(path)
-		fmt.Println(repo)
-		fmt.Println()
+		// repo.Commits is ordered first commits last
+		// repo.LinesOfCode is also not accurate, just counts all text lines in repo
+
+		/*fmt.Println()
 
 		for i := 0; i < repo.NumOfCommits; i++ {
 			fmt.Println(repo.Commits[i])
-		}
+		}*/
 
-		//display.Vis(repo)
+		fmt.Println(repo)
+		display.Visualize(repo)
 	}
 
 	if *ghRepoFlag {
