@@ -10,9 +10,9 @@ import (
 )
 
 /*
-	Notes
-	- (local) Show commit history like on GitHub by week rows
-	- (local) Be able to inspect a commit
+	notes
+	- (local) show commit history like on GitHub by week rows
+	- (local) be able to inspect a commit
 */
 
 func main() {

@@ -1,6 +1,6 @@
 package localrepo
 
-// Back-end
+// back-end
 
 import (
 	"fmt"
@@ -63,6 +63,7 @@ func NewRepository(path string) (repo Repository) {
 	return
 }
 
+// break this up
 func (r *Repository) fillCommits() {
 	repo, err := git.PlainOpen(r.Path)
 	if err != nil {

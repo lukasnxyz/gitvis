@@ -1,6 +1,6 @@
 package display
 
-// Front-end
+// front-end
 
 import (
 	"fmt"
