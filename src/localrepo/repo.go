@@ -41,9 +41,19 @@ func (r Repository) String() string {
 		r.Name, r.Path, r.Status, r.NumOfCommits, r.Lines)
 }
 
+func (r Repository) StringShort() string {
+	return fmt.Sprintf("'%s' #%d len %d\n",
+		r.Path, r.NumOfCommits, r.Lines)
+}
+
 func (c Commit) String() string {
 	return fmt.Sprintf("Commit [\n\tTime: %s\n\tMessage: %s\tAuthor: %s\n\tEmail: %s\n\tId: %s\n\tDiff: -%d	+%d\n\tLines: %d\n]",
 		c.Time, c.Message, c.Author, c.Email, c.Id, c.LinesDeleted, c.LinesAdded, c.Lines)
+}
+
+func (c Commit) StringShort() string {
+	return fmt.Sprintf("%v %02d:%02d %02d.%02d.%04d %s\n",
+		c.Id, c.Time.Hour(), c.Time.Minute(), c.Time.Day(), c.Time.Month(), c.Time.Year(), c.Author)
 }
 
 func Fet(path string) Repository {

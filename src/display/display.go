@@ -4,31 +4,48 @@ package display
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/lukasnxyz/gitvis/src/localrepo"
+	"github.com/fatih/color"
+)
+
+type Color string
+const (
+	darkGreen Color = "#006400"
+	lightGreen Color = "#90ee90"
+	green Color = "#00ff00"
 )
 
 type DisplayNode struct {
+	Color string
+	Time time.Time
 }
 
 type Display struct {
 	Length int // term cols
-	Width  int // term rows
+	Height  int // term rows
 	Nodes  []DisplayNode
 }
 
 func sort(repo localrepo.Repository) Display {
 	display := Display{
-		Length: 10,
-		Width:  10,
+		Length: 52,
+		Height: 7,
 	}
 
 	return display
 }
 
 func Visualize(repo localrepo.Repository) {
-	display := sort(repo)
+	fmt.Print(repo.StringShort())
+	for _, commit := range repo.Commits {
+		linesChanged := commit.LinesAdded + commit.LinesDeleted
 
-	fmt.Println(repo.Name)
-	fmt.Println(display.Length)
+		if linesChanged > 30 {
+			color.Blue(commit.StringShort())
+		} else if linesChanged > 15 {
+			color.Green(commit.StringShort())
+		}
+	}
 }

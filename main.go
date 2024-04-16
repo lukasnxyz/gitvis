@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	//"fmt"
 	"os"
 
 	"github.com/lukasnxyz/gitvis/src/display"
@@ -11,8 +11,9 @@ import (
 
 /*
 	notes
-	- (local) show commit history like on GitHub by week rows
-	- (local) be able to inspect a commit
+	- show commit history like on GitHub by week rows
+	- be able to inspect a commit
+	- a less feature for the output?
 */
 
 func main() {
@@ -29,18 +30,12 @@ func main() {
 
 	flag.Parse()
 
+	// default to local, if not, don't pass local
 	if *localRepoFlag {
 		repo := localrepo.Fet(path)
 		// repo.Commits is ordered first commits last
 		// repo.LinesOfCode is also not accurate, just counts all text lines in repo
 
-		/*fmt.Println()
-
-		for i := 0; i < repo.NumOfCommits; i++ {
-			fmt.Println(repo.Commits[i])
-		}*/
-
-		fmt.Println(repo)
 		display.Visualize(repo)
 	}
 
