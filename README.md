@@ -6,3 +6,6 @@ A cli tool to view git commit history's, both locally and on GitHub.
 go install github.com/lukasnxyz/gitvis@latest
 gitvis .
 ```
+
+#### Acknowledgment
+Inspired by [Kai Hendry's](https://github.com/kaihendry) [lesshero](https://github.com/kaihendry/lesshero/).
